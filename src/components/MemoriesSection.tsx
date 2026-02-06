@@ -1,31 +1,104 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Upload, Image as ImageIcon, X } from "lucide-react";
+import { Upload, Image as ImageIcon, X, Heart, Sparkles } from "lucide-react";
+import CutePanda from "./CutePanda";
+
+interface Memory {
+  id: string;
+  image?: string;
+  caption: string;
+  date: string;
+  emoji: string;
+}
+
+const defaultMemories: Memory[] = [
+  {
+    id: "1",
+    caption: "The day we first met 💫",
+    date: "A beautiful beginning",
+    emoji: "🌸"
+  },
+  {
+    id: "2", 
+    caption: "Our first date together 🥰",
+    date: "Butterflies everywhere",
+    emoji: "🦋"
+  },
+  {
+    id: "3",
+    caption: "That time we laughed until we cried 😂",
+    date: "Pure happiness",
+    emoji: "💕"
+  },
+  {
+    id: "4",
+    caption: "Our favorite adventure 🌄",
+    date: "Making memories",
+    emoji: "✨"
+  },
+  {
+    id: "5",
+    caption: "When you made me the happiest 💖",
+    date: "Forever grateful",
+    emoji: "🐼"
+  },
+  {
+    id: "6",
+    caption: "Every moment with you is precious 💝",
+    date: "Always & forever",
+    emoji: "💗"
+  }
+];
+
+const loveQuotes = [
+  "You're the reason I believe in love 💕",
+  "Every love story is beautiful, but ours is my favorite 🌸",
+  "With you, forever doesn't seem long enough 💖",
+  "You make my heart smile every single day 🥰",
+  "I fell in love with you, not for how you look, but for who you are 💗",
+  "You're my today and all of my tomorrows ✨",
+];
 
 const MemoriesSection = () => {
-  const [images, setImages] = useState<string[]>([]);
+  const [memories, setMemories] = useState<Memory[]>(defaultMemories);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentQuote, setCurrentQuote] = useState(0);
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, memoryId?: string) => {
     const files = e.target.files;
-    if (files) {
-      Array.from(files).forEach((file) => {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          if (event.target?.result) {
-            setImages((prev) => [...prev, event.target!.result as string]);
+    if (files && files[0]) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          if (memoryId) {
+            setMemories(prev => prev.map(m => 
+              m.id === memoryId ? { ...m, image: event.target!.result as string } : m
+            ));
+          } else {
+            const newMemory: Memory = {
+              id: Date.now().toString(),
+              image: event.target!.result as string,
+              caption: "A new beautiful memory 💖",
+              date: new Date().toLocaleDateString(),
+              emoji: "💕"
+            };
+            setMemories(prev => [...prev, newMemory]);
           }
-        };
-        reader.readAsDataURL(file);
-      });
+        }
+      };
+      reader.readAsDataURL(files[0]);
     }
   };
 
-  const removeImage = (index: number) => {
-    setImages((prev) => prev.filter((_, i) => i !== index));
-    if (currentSlide >= images.length - 1) {
-      setCurrentSlide(Math.max(0, images.length - 2));
+  const removeMemory = (id: string) => {
+    setMemories(prev => prev.filter(m => m.id !== id));
+    if (currentSlide >= memories.length - 1) {
+      setCurrentSlide(Math.max(0, memories.length - 2));
     }
+  };
+
+  const nextQuote = () => {
+    setCurrentQuote((prev) => (prev + 1) % loveQuotes.length);
   };
 
   return (
@@ -34,7 +107,33 @@ const MemoriesSection = () => {
       animate={{ opacity: 1, y: 0 }}
       className="py-16 px-4"
     >
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
+        {/* Love Quote Section */}
+        <motion.div 
+          className="text-center mb-12 cursor-pointer"
+          onClick={nextQuote}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <motion.div
+            className="flex justify-center gap-4 mb-4"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+          >
+            <CutePanda variant="kissing" size="sm" />
+            <CutePanda variant="hugging" size="sm" />
+          </motion.div>
+          <motion.p
+            key={currentQuote}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-xl md:text-2xl font-romantic text-gradient-love"
+          >
+            "{loveQuotes[currentQuote]}"
+          </motion.p>
+          <p className="text-sm text-muted-foreground mt-2">Click for more love notes 💌</p>
+        </motion.div>
+
         <motion.h2
           className="text-3xl md:text-4xl font-bold text-center mb-8 text-gradient-love"
           animate={{ scale: [1, 1.02, 1] }}
@@ -43,101 +142,146 @@ const MemoriesSection = () => {
           Our Precious Memories 📸
         </motion.h2>
 
-        {/* Upload area */}
-        <motion.label
-          className="block w-full max-w-md mx-auto mb-8 cursor-pointer"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          <div className="border-2 border-dashed border-primary/40 rounded-2xl p-8 text-center bg-card/50 backdrop-blur-sm hover:border-primary transition-colors">
-            <Upload className="w-12 h-12 mx-auto mb-4 text-primary/60" />
-            <p className="text-muted-foreground">
-              Click to upload our photos together 💕
-            </p>
-            <p className="text-sm text-muted-foreground/60 mt-2">
-              PNG, JPG up to 10MB
-            </p>
-          </div>
-          <input
-            type="file"
-            multiple
-            accept="image/*"
-            onChange={handleImageUpload}
-            className="hidden"
-          />
-        </motion.label>
+        {/* Panda decorations */}
+        <div className="flex justify-center gap-6 mb-8">
+          <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 2, repeat: Infinity }}>
+            <CutePanda variant="excited" size="sm" />
+          </motion.div>
+          <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}>
+            <CutePanda variant="waving" size="sm" />
+          </motion.div>
+          <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}>
+            <CutePanda variant="happy" size="sm" />
+          </motion.div>
+        </div>
 
-        {/* Image gallery */}
-        {images.length > 0 && (
-          <div className="space-y-6">
-            {/* Main slideshow */}
+        {/* Memory Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {memories.map((memory, index) => (
             <motion.div
-              className="relative aspect-video rounded-3xl overflow-hidden shadow-float bg-card"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              key={memory.id}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ y: -5, scale: 1.02 }}
+              className="relative group bg-card/80 backdrop-blur-sm rounded-3xl p-4 shadow-love overflow-hidden"
             >
-              <img
-                src={images[currentSlide]}
-                alt={`Memory ${currentSlide + 1}`}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-                {images.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrentSlide(i)}
-                    className={`w-3 h-3 rounded-full transition-colors ${
-                      i === currentSlide ? "bg-primary" : "bg-primary/30"
-                    }`}
-                  />
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Thumbnails */}
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
-              {images.map((img, i) => (
-                <motion.div
-                  key={i}
-                  className="relative group aspect-square rounded-xl overflow-hidden shadow-love cursor-pointer"
-                  whileHover={{ scale: 1.05 }}
-                  onClick={() => setCurrentSlide(i)}
-                >
+              {/* Image or Upload area */}
+              {memory.image ? (
+                <div className="relative aspect-square rounded-2xl overflow-hidden mb-4">
                   <img
-                    src={img}
-                    alt={`Thumbnail ${i + 1}`}
-                    className={`w-full h-full object-cover transition-opacity ${
-                      i === currentSlide ? "ring-2 ring-primary" : ""
-                    }`}
+                    src={memory.image}
+                    alt={memory.caption}
+                    className="w-full h-full object-cover"
                   />
                   <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      removeImage(i);
-                    }}
-                    className="absolute top-1 right-1 p-1 rounded-full bg-card/80 opacity-0 group-hover:opacity-100 transition-opacity"
+                    onClick={() => removeMemory(memory.id)}
+                    className="absolute top-2 right-2 p-1.5 rounded-full bg-card/80 opacity-0 group-hover:opacity-100 transition-opacity"
                   >
                     <X size={14} className="text-foreground" />
                   </button>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        )}
+                </div>
+              ) : (
+                <label className="block aspect-square rounded-2xl border-2 border-dashed border-primary/30 hover:border-primary/60 transition-colors cursor-pointer mb-4 flex flex-col items-center justify-center bg-primary/5">
+                  <span className="text-4xl mb-2">{memory.emoji}</span>
+                  <Upload className="w-8 h-8 text-primary/40 mb-2" />
+                  <span className="text-sm text-muted-foreground">Add photo</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, memory.id)}
+                    className="hidden"
+                  />
+                </label>
+              )}
 
-        {/* Empty state */}
-        {images.length === 0 && (
-          <motion.div
-            className="text-center py-12"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+              {/* Caption */}
+              <div className="text-center">
+                <p className="font-medium text-foreground mb-1">{memory.caption}</p>
+                <p className="text-sm text-muted-foreground flex items-center justify-center gap-1">
+                  <Heart className="w-3 h-3 text-primary" fill="currentColor" />
+                  {memory.date}
+                </p>
+              </div>
+
+              {/* Decorative sparkle */}
+              <motion.div
+                className="absolute top-2 left-2"
+                animate={{ rotate: 360, scale: [1, 1.2, 1] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                <Sparkles className="w-4 h-4 text-primary/40" />
+              </motion.div>
+            </motion.div>
+          ))}
+
+          {/* Add new memory card */}
+          <motion.label
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="cursor-pointer bg-card/50 backdrop-blur-sm rounded-3xl p-4 shadow-soft flex flex-col items-center justify-center min-h-[280px] border-2 border-dashed border-primary/30 hover:border-primary/60 transition-colors"
           >
-            <ImageIcon className="w-16 h-16 mx-auto mb-4 text-primary/30" />
-            <p className="text-muted-foreground">
-              Upload photos to create our memory slideshow 🌸
+            <motion.div
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <CutePanda variant="happy" size="md" />
+            </motion.div>
+            <p className="text-muted-foreground mt-4 text-center">
+              Add a new memory 💕
             </p>
-          </motion.div>
-        )}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleImageUpload(e)}
+              className="hidden"
+            />
+          </motion.label>
+        </div>
+
+        {/* Romantic message section */}
+        <motion.div
+          className="text-center mt-12 p-8 bg-card/60 backdrop-blur-sm rounded-3xl shadow-love"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          <div className="flex justify-center gap-3 mb-4">
+            <motion.div
+              animate={{ rotate: [-5, 5, -5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <CutePanda variant="sleeping" size="sm" />
+            </motion.div>
+            <motion.div
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              <CutePanda variant="hugging" size="sm" />
+            </motion.div>
+          </div>
+          <h3 className="font-romantic text-3xl md:text-4xl text-gradient-love mb-4">
+            You Mean Everything To Me
+          </h3>
+          <p className="text-foreground/70 max-w-lg mx-auto leading-relaxed">
+            Every moment with you is a treasure. You make my world brighter, my heart fuller, 
+            and my life more beautiful than I ever imagined possible. I love you more than 
+            words could ever express. 🐼💕
+          </p>
+          <div className="flex justify-center gap-2 mt-6 text-2xl">
+            {["💖", "🌸", "🐼", "💕", "✨", "💗", "🌷"].map((emoji, i) => (
+              <motion.span
+                key={i}
+                animate={{ y: [0, -8, 0] }}
+                transition={{ delay: i * 0.12, duration: 1.5, repeat: Infinity }}
+              >
+                {emoji}
+              </motion.span>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </motion.section>
   );

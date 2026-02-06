@@ -60,6 +60,14 @@ const LoveLetter = ({ isOpen, onClose }: LoveLetterProps) => {
                 <p>
                   Thank you for being you, for loving me, and for making my heart so incredibly full.
                 </p>
+                <p>
+                  From the moment I met you, I knew you were special. Your kindness, your laughter, 
+                  the way you care for everyone around you — it all makes me fall deeper in love. 🌸
+                </p>
+                <p>
+                  I promise to cherish every moment, celebrate every joy, and hold your hand through 
+                  every storm. With you, I've found my home. 💖🐼
+                </p>
               </div>
 
               <motion.p

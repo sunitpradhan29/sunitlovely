@@ -17,6 +17,14 @@ const noMessages = [
   "Panda believes in you! 🐼✨",
   "Love is the answer! 💖",
   "Click Yes, you know you want to! 😘",
+  "My heart only beats for you! 💓",
+  "We're meant to be together! 🌈",
+  "Look at how cute panda is waiting! 🐼",
+  "Your smile is my sunshine ☀️",
+  "I promise infinite cuddles! 🤗",
+  "Together forever sounds perfect! 💞",
+  "You complete my puzzle 🧩❤️",
+  "I'll make you happy every day! 🌺",
 ];
 
 const ValentineQuestion = ({ onYes }: ValentineQuestionProps) => {
