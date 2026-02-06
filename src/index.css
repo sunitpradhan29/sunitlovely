@@ -2,95 +2,97 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Sacramento&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 350 100% 97%;
+    --foreground: 350 30% 25%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 350 30% 25%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 350 30% 25%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 350 80% 65%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 350 60% 92%;
+    --secondary-foreground: 350 30% 30%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 350 40% 95%;
+    --muted-foreground: 350 20% 50%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 0 85% 60%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 350 40% 88%;
+    --input: 350 40% 88%;
+    --ring: 350 80% 65%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
+
+    /* Custom Valentine Colors */
+    --rose-blush: 350 70% 75%;
+    --petal-pink: 345 60% 85%;
+    --cream: 30 50% 96%;
+    --love-red: 0 80% 55%;
+    --soft-coral: 15 80% 75%;
+    --panda-black: 0 0% 15%;
+    --panda-white: 0 0% 98%;
+
+    /* Gradients */
+    --gradient-love: linear-gradient(135deg, hsl(350 80% 70%), hsl(0 75% 65%));
+    --gradient-sunset: linear-gradient(180deg, hsl(350 100% 97%), hsl(345 60% 90%));
+    --gradient-glow: radial-gradient(circle, hsl(350 80% 85% / 0.5), transparent);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px hsl(350 60% 70% / 0.2);
+    --shadow-float: 0 8px 30px hsl(350 60% 60% / 0.25);
+    --shadow-glow: 0 0 40px hsl(350 80% 70% / 0.4);
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 350 30% 8%;
+    --foreground: 350 20% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 350 25% 12%;
+    --card-foreground: 350 20% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 350 25% 12%;
+    --popover-foreground: 350 20% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 350 75% 60%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 350 30% 18%;
+    --secondary-foreground: 350 20% 90%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 350 25% 20%;
+    --muted-foreground: 350 15% 60%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 0 70% 50%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 350 25% 20%;
+    --input: 350 25% 20%;
+    --ring: 350 75% 60%;
   }
 }
 
@@ -100,6 +102,190 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-quicksand;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 {
+    @apply font-quicksand font-bold;
+  }
+}
+
+@layer components {
+  .font-romantic {
+    font-family: 'Sacramento', cursive;
+  }
+
+  .font-quicksand {
+    font-family: 'Quicksand', sans-serif;
+  }
+
+  .text-gradient-love {
+    background: var(--gradient-love);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-gradient-love {
+    background: var(--gradient-love);
+  }
+
+  .bg-gradient-sunset {
+    background: var(--gradient-sunset);
+  }
+
+  .shadow-love {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-float {
+    box-shadow: var(--shadow-float);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .btn-love {
+    @apply px-8 py-4 rounded-full font-bold text-lg transition-all duration-300;
+    background: var(--gradient-love);
+    color: white;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .btn-love:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-float);
+  }
+
+  .btn-shy {
+    @apply px-8 py-4 rounded-full font-bold text-lg transition-all duration-200;
+    background: hsl(var(--muted));
+    color: hsl(var(--muted-foreground));
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-bounce-slow {
+    animation: bounce-slow 2s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-wiggle {
+    animation: wiggle 0.5s ease-in-out infinite;
+  }
+
+  .animate-heart-beat {
+    animation: heart-beat 1s ease-in-out infinite;
+  }
+
+  .animate-spin-slow {
+    animation: spin 4s linear infinite;
+  }
+
+  .animate-fade-up {
+    animation: fade-up 0.6s ease-out forwards;
+  }
+
+  .animate-scale-up {
+    animation: scale-up 0.5s ease-out forwards;
+  }
+
+  .animate-confetti {
+    animation: confetti 1s ease-out forwards;
+  }
+
+  .animate-dance {
+    animation: dance 0.8s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(3deg); }
+  }
+
+  @keyframes bounce-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { 
+      opacity: 1; 
+      filter: drop-shadow(0 0 10px hsl(350 80% 70% / 0.5));
+    }
+    50% { 
+      opacity: 0.8; 
+      filter: drop-shadow(0 0 25px hsl(350 80% 70% / 0.8));
+    }
+  }
+
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+
+  @keyframes heart-beat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.1); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.15); }
+  }
+
+  @keyframes fade-up {
+    from { 
+      opacity: 0; 
+      transform: translateY(30px); 
+    }
+    to { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+  }
+
+  @keyframes scale-up {
+    from { 
+      opacity: 0; 
+      transform: scale(0.5); 
+    }
+    to { 
+      opacity: 1; 
+      transform: scale(1); 
+    }
+  }
+
+  @keyframes confetti {
+    0% { 
+      transform: translateY(0) rotate(0deg); 
+      opacity: 1;
+    }
+    100% { 
+      transform: translateY(-100px) rotate(720deg); 
+      opacity: 0;
+    }
+  }
+
+  @keyframes dance {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    25% { transform: translateX(-5px) rotate(-5deg); }
+    75% { transform: translateX(5px) rotate(5deg); }
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
   }
 }
