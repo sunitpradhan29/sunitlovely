@@ -1,7 +1,15 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Upload, Image as ImageIcon, X, Heart, Sparkles } from "lucide-react";
+import { Upload, X, Heart, Sparkles } from "lucide-react";
 import CutePanda from "./CutePanda";
+
+// Import memory images
+import memoryFirstMet from "@/assets/memory-first-met.jpg";
+import memoryFirstDate from "@/assets/memory-first-date.jpg";
+import memoryLaughing from "@/assets/memory-laughing.jpg";
+import memoryAdventure from "@/assets/memory-adventure.jpg";
+import memoryHappiness from "@/assets/memory-happiness.jpg";
+import memoryPrecious from "@/assets/memory-precious.jpg";
 
 interface Memory {
   id: string;
@@ -14,36 +22,42 @@ interface Memory {
 const defaultMemories: Memory[] = [
   {
     id: "1",
+    image: memoryFirstMet,
     caption: "The day we first met 💫",
     date: "A beautiful beginning",
     emoji: "🌸"
   },
   {
-    id: "2", 
+    id: "2",
+    image: memoryFirstDate,
     caption: "Our first date together 🥰",
     date: "Butterflies everywhere",
     emoji: "🦋"
   },
   {
     id: "3",
+    image: memoryLaughing,
     caption: "That time we laughed until we cried 😂",
     date: "Pure happiness",
     emoji: "💕"
   },
   {
     id: "4",
+    image: memoryAdventure,
     caption: "Our favorite adventure 🌄",
     date: "Making memories",
     emoji: "✨"
   },
   {
     id: "5",
+    image: memoryHappiness,
     caption: "When you made me the happiest 💖",
     date: "Forever grateful",
     emoji: "🐼"
   },
   {
     id: "6",
+    image: memoryPrecious,
     caption: "Every moment with you is precious 💝",
     date: "Always & forever",
     emoji: "💗"
