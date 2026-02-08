@@ -3,64 +3,50 @@ import { motion } from "framer-motion";
 import { Upload, X, Heart, Sparkles } from "lucide-react";
 import CutePanda from "./CutePanda";
 
-// Import memory images
-import memoryFirstMet from "@/assets/memory-first-met.jpg";
-import memoryFirstDate from "@/assets/memory-first-date.jpg";
-import memoryLaughing from "@/assets/memory-laughing.jpg";
-import memoryAdventure from "@/assets/memory-adventure.jpg";
-import memoryHappiness from "@/assets/memory-happiness.jpg";
-import memoryPrecious from "@/assets/memory-precious.jpg";
+// Import our actual memory photos
+import memory1 from "@/assets/memory-1.jpg";
+import memory2 from "@/assets/memory-2.jpg";
+import memory3 from "@/assets/memory-3.jpg";
+import memory4 from "@/assets/memory-4.jpg";
+import memory5 from "@/assets/memory-5.jpg";
+import memory6 from "@/assets/memory-6.jpg";
 
 interface Memory {
   id: string;
   image?: string;
-  caption: string;
-  date: string;
   emoji: string;
 }
 
 const defaultMemories: Memory[] = [
   {
     id: "1",
-    image: memoryFirstMet,
-    caption: "The day we first met 💫",
-    date: "A beautiful beginning",
-    emoji: "🌸"
+    image: memory1,
+    emoji: "💋"
   },
   {
     id: "2",
-    image: memoryFirstDate,
-    caption: "Our first date together 🥰",
-    date: "Butterflies everywhere",
-    emoji: "🦋"
+    image: memory2,
+    emoji: "📸"
   },
   {
     id: "3",
-    image: memoryLaughing,
-    caption: "That time we laughed until we cried 😂",
-    date: "Pure happiness",
-    emoji: "💕"
+    image: memory3,
+    emoji: "🌙"
   },
   {
     id: "4",
-    image: memoryAdventure,
-    caption: "Our favorite adventure 🌄",
-    date: "Making memories",
-    emoji: "✨"
+    image: memory4,
+    emoji: "💕"
   },
   {
     id: "5",
-    image: memoryHappiness,
-    caption: "When you made me the happiest 💖",
-    date: "Forever grateful",
-    emoji: "🐼"
+    image: memory5,
+    emoji: "🥰"
   },
   {
     id: "6",
-    image: memoryPrecious,
-    caption: "Every moment with you is precious 💝",
-    date: "Always & forever",
-    emoji: "💗"
+    image: memory6,
+    emoji: "😴"
   }
 ];
 
@@ -92,8 +78,6 @@ const MemoriesSection = () => {
             const newMemory: Memory = {
               id: Date.now().toString(),
               image: event.target!.result as string,
-              caption: "A new beautiful memory 💖",
-              date: new Date().toLocaleDateString(),
               emoji: "💕"
             };
             setMemories(prev => [...prev, newMemory]);
@@ -182,10 +166,10 @@ const MemoriesSection = () => {
             >
               {/* Image or Upload area */}
               {memory.image ? (
-                <div className="relative aspect-square rounded-2xl overflow-hidden mb-4">
+                <div className="relative aspect-square rounded-2xl overflow-hidden">
                   <img
                     src={memory.image}
-                    alt={memory.caption}
+                    alt="Our memory"
                     className="w-full h-full object-cover"
                   />
                   <button
@@ -194,9 +178,13 @@ const MemoriesSection = () => {
                   >
                     <X size={14} className="text-foreground" />
                   </button>
+                  {/* Emoji overlay */}
+                  <div className="absolute bottom-2 right-2 text-2xl">
+                    {memory.emoji}
+                  </div>
                 </div>
               ) : (
-                <label className="block aspect-square rounded-2xl border-2 border-dashed border-primary/30 hover:border-primary/60 transition-colors cursor-pointer mb-4 flex flex-col items-center justify-center bg-primary/5">
+                <label className="block aspect-square rounded-2xl border-2 border-dashed border-primary/30 hover:border-primary/60 transition-colors cursor-pointer flex flex-col items-center justify-center bg-primary/5">
                   <span className="text-4xl mb-2">{memory.emoji}</span>
                   <Upload className="w-8 h-8 text-primary/40 mb-2" />
                   <span className="text-sm text-muted-foreground">Add photo</span>
@@ -208,15 +196,6 @@ const MemoriesSection = () => {
                   />
                 </label>
               )}
-
-              {/* Caption */}
-              <div className="text-center">
-                <p className="font-medium text-foreground mb-1">{memory.caption}</p>
-                <p className="text-sm text-muted-foreground flex items-center justify-center gap-1">
-                  <Heart className="w-3 h-3 text-primary" fill="currentColor" />
-                  {memory.date}
-                </p>
-              </div>
 
               {/* Decorative sparkle */}
               <motion.div
